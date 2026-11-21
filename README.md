@@ -32,6 +32,15 @@ BEANZ MP3 Player is a lightweight music player for the original Nintendo GameCub
 
 The player focuses on one song at a time. It does not include seeking, track skipping, playlists, repeat, shuffle, or automatic next-song playback.
 
+## Preparing MP3 files (optional)
+
+Need to convert audio to MP3? You can use **[YT2MP3](https://github.com/nxs8739/yt2mp3)**, a separate conversion tool by BEANZ:
+
+- **Online converter (Windows, Linux, and other platforms):** [YT2MP3 Web](https://yt2mp3.bsllc.xyz/) — convert through your web browser.
+- **Linux AppImage (x86_64):** [YT2MP3 v1.3 AppImage Release](https://github.com/nxs8739/yt2mp3/releases/tag/v1.3) — download the AppImage to run the converter on your own Linux computer. The first launch requires an internet connection to install its Python dependencies.
+
+YT2MP3 targets **192 kbps MP3** output. It is **optional**: BEANZ MP3 Player can play compatible MP3 files made with other tools, too. Only convert content you have permission to use.
+
 ## Requirements
 
 **To run:**
