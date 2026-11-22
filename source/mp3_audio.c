@@ -40,6 +40,26 @@ static mp3d_sample_t frame_pcm[MINIMP3_MAX_SAMPLES_PER_FRAME];
 static unsigned scan_duration(const char *path) {
     FILE *f = fopen(path, "rb");
     if (!f) return 0;
+    /* Skip an ID3v2 tag before looking for MPEG frames. Album artwork and
+       other metadata can contain false MP3 sync patterns; locking onto one
+       would make the duration scanner reject the real song sample rate. */
+    unsigned char id3[10];
+    if (fread(id3, 1, sizeof(id3), f) == sizeof(id3) &&
+        memcmp(id3, "ID3", 3) == 0 && id3[3] >= 2 && id3[3] <= 4 &&
+        !(id3[6] & 0x80) && !(id3[7] & 0x80) &&
+        !(id3[8] & 0x80) && !(id3[9] & 0x80)) {
+        unsigned tag_bytes = ((unsigned)id3[6] << 21) |
+                             ((unsigned)id3[7] << 14) |
+                             ((unsigned)id3[8] << 7) | (unsigned)id3[9];
+        long audio_offset = (long)tag_bytes + 10;
+        if (id3[3] == 4 && (id3[5] & 0x10)) audio_offset += 10;
+        if (fseek(f, audio_offset, SEEK_SET) != 0) {
+            fclose(f);
+            return 0;
+        }
+    } else {
+        rewind(f);
+    }
     unsigned char buf[8192];
     size_t have = 0, pos = 0;
     unsigned long long sample_count = 0;
