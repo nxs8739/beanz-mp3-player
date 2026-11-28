@@ -1,6 +1,6 @@
 # BEANZ MP3 Player
 
-**Version 1.0 — Nintendo GameCube homebrew**
+**Version 1.1 — Nintendo GameCube homebrew**
 
 BEANZ MP3 Player is a lightweight music player for the original Nintendo GameCube. Browse MP3 files on SD storage and play them through a custom GameCube-themed interface.
 
